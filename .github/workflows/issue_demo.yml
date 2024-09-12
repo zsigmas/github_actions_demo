@@ -1,0 +1,17 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  issues: [opened]
+jobs:
+  read-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract and print issue labels
+        run: |
+          echo "Labels: ${{ github.event.issue.labels }}"
+          labels=$(echo ${{ toJSON(github.event.issue.labels) }} | jq -r '.[].name')
+          echo "Issue Labels: $labels"
+          
+      - name: Conditional action based on label
+        if: contains(steps.read-labels.outputs.labels, 'bug')
+        run: echo "The issue is labeled as a bug!"
