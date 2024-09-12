@@ -46,7 +46,7 @@ jobs:
           fi
 
           echo "Creating PR"
-          pr_url=$(gh pr create --base main --head "$branch_name" -l "Release" -F .github/PULL_REQUEST_TEMPLATE/pull_request_template.md -t "${{ github.event.issue.title }}")
+          pr_url=$(gh pr create --base main --head "$branch_name" -l "release" -F .github/PULL_REQUEST_TEMPLATE/pull_request_template.md -t "${{ github.event.issue.title }}")
 
           echo "Creating comment"
           gh issue comment ${{ github.event.issue.number }} --body $body 
