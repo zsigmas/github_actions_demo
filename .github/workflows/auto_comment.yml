@@ -1,26 +1,15 @@
-name: Comment on Issue Using gh CLI
-
+name: Comment when opened
 on:
   issues:
-    types: [opened, labeled]
-
+    types:
+      - opened
 jobs:
-  comment-on-issue:
+  comment:
     runs-on: ubuntu-latest
+    permissions:
+        issues: write
     steps:
-      - name: Authenticate GitHub CLI with GITHUB_TOKEN
+      - run: gh issue comment $ISSUE --body "Thank you for opening this issue!"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "$GITHUB_TOKEN" | gh auth login --with-token
-
-      - name: Get issue labels using gh CLI
-        id: get-labels
-        run: |
-          labels=$(gh issue view ${{ github.event.issue.number }} --json labels --jq '.labels[].name')
-          echo "labels=$labels" >> $GITHUB_ENV
-          echo "Issue Labels: $labels"
-
-      - name: Comment on issue using gh CLI
-        run: |
-          gh issue comment ${{ github.event.issue.number }} --body "The following labels were found on this issue: ${{ env.labels }}"
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
