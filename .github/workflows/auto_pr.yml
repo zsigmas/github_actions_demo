@@ -1,7 +1,7 @@
 name: Create a PR for release issues
 on:
   issues:
-    types: [opened, labeled]
+    types: [opened, labeled, edited]
 
 jobs:
   create-pr:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
           
       - name: Create PR and comment
         id: branch-creation
@@ -22,8 +22,14 @@ jobs:
           ISSUE: ${{ github.event.issue.html_url }}        
         run: |
           version=version=$(echo "${{ github.event.issue.title }}" | sed -n 's/v\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1/p')
-          branch_name="rc/$version"
 
+          # Early return if issue name is not correct
+          if [ -z "$version" ]; then
+            gh issue comment ${{ github.event.issue.number }} --body "Version number is not present or incorrect."                        
+            exit 1
+          fi          
+
+          branch_name="rc/$version"
           body_branch_present="A new branch named \`$branch_name\` was already present in the repository and a [pull request]($pr_url) has been opened to merge this branch into \`main\`."
           body_branch_not_present="A new branch named \`$branch_name\` has been created and a [pull request]($pr_url) has been opened to merge this branch into \`main\`."
           
