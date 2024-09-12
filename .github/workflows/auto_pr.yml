@@ -45,7 +45,10 @@ jobs:
             body=$body_branch_not_present
           fi
 
+          echo "Creating PR"
           pr_url=$(gh pr create --base main --head "$branch_name" -l Release -T pull_request_template.md -t ${{ github.event.issue.title }}")
+
+          echo "Creating comment"
           gh issue comment ${{ github.event.issue.number }} --body $body 
 
           
