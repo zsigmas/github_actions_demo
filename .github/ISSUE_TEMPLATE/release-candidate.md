@@ -1,7 +1,7 @@
 ---
 name: Release candidate
 about: Create a new release candidate issue
-title: "[release] rc/v.x.x.x"
+title: "[release] rc/vx.x.x"
 labels: release
 assignees: ''
 
