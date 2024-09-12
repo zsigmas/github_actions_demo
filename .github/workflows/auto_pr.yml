@@ -46,8 +46,6 @@ jobs:
             echo "Creating branch: $branch_name"
             
           fi
-
-          pr_url_text
           
           echo "Creating PR"
           #pr_creation_url=$(gh pr create --base main --head "$branch_name" -l "release" -F .github/PULL_REQUEST_TEMPLATE/pull_request_template.md -t "${{ github.event.issue.title }}")
