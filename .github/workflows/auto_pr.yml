@@ -21,7 +21,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE: ${{ github.event.issue.html_url }}        
         run: |
-          branch_name="rc/${{ github.event.issue.title }}"
+          version=version=$(echo "${{ github.event.issue.title }}" | sed -n 's/v\([0-9]\+\.[0-9]\+\.[0-9]\+\)/\1/p')
+          branch_name="rc/$version"
 
           body_branch_present="A new branch named \`$branch_name\` was already present in the repository and a [pull request]($pr_url) has been opened to merge this branch into \`main\`."
           body_branch_not_present="A new branch named \`$branch_name\` has been created and a [pull request]($pr_url) has been opened to merge this branch into \`main\`."
