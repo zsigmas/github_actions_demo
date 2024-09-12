@@ -1,7 +1,9 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Get Issue Labels
+
 on:
-  issues: [opened]
+  issues:
+    types: [opened, labeled]
+
 jobs:
   read-labels:
     runs-on: ubuntu-latest
