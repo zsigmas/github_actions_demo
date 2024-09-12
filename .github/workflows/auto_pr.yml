@@ -51,7 +51,8 @@ jobs:
           #pr_creation_url=$(gh pr create --base main --head "$branch_name" -l "release" -F .github/PULL_REQUEST_TEMPLATE/pull_request_template.md -t "${{ github.event.issue.title }}")
           #body_url="a link to the created pull request into main is available [pull request](${pr_creation_url}) has been opened to merge this branch into \`main\`."
           
-          pr_url_text="https://github.com/${{github.repository}}/compare/main...${branch_name}?quick_pull=1&template=pull_request_template.md&title=\"${{ github.event.issue.title }}\"&labels=release"
+          title=$(echo ${{ github.event.issue.title }} | jq -sRr @uri)
+          pr_url_text="https://github.com/${{github.repository}}/compare/main...${branch_name}?quick_pull=1&template=pull_request_template.md&title=${title}&labels=release"
           body_url="A link to create a pull request into main is available in [pull request](<${pr_url_text}>)."
 
           body="$branch_text $body_url"          
