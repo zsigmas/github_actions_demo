@@ -1,0 +1,73 @@
+name: Create a PR for release issues
+on:
+  issues:
+    types:
+      - opened
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+        issues: write
+        pull-requests: write
+    steps:
+      - run: gh pr create -b main -d -l Release -T pull_request_template.md -t ${{ github.event.issue.title }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
+      - run: gh issue comment $ISSUE --body "Thank you for opening this issue!"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
+
+          name: Create Branch and PR from Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up GitHub CLI
+        run: |
+          echo "$GITHUB_TOKEN" | gh auth login --with-token
+
+      - name: Check if the branch already exists
+        id: check-branch
+        run: |
+          issue_number=${{ github.event.issue.number }}
+          branch_name="issue-${issue_number}"
+          
+          # Check if the branch exists on the remote
+          if git ls-remote --heads origin "$branch_name" | grep "$branch_name"; then
+            echo "Branch already exists: $branch_name"
+            echo "branch_exists=true" >> $GITHUB_ENV
+          else
+            echo "Branch does not exist. Creating a new branch."
+            echo "branch_exists=false" >> $GITHUB_ENV
+          fi
+          
+      - name: Create a new branch if it doesn't exist
+        if: env.branch_exists == 'false'
+        run: |
+          git checkout -b "$branch_name"
+          git push origin "$branch_name"
+          echo "branch_name=$branch_name" >> $GITHUB_ENV
+
+      - name: Create a pull request into main
+        id: create-pr
+        run: |
+          branch_name="issue-${{ github.event.issue.number }}"
+          pr_url=$(gh pr create --base main --head "$branch_name" -l Release -T pull_request_template.md -t ${{ github.event.issue.title }}")
+          echo "pr_url=$pr_url" >> $GITHUB_ENV
+
+      - name: Comment on the issue with PR link and branch name
+        run: |
+            branch_name="${{ env.branch_name }}"
+            pr_url="${{ env.pr_url }}"
+            gh issue comment ${{ github.event.issue.number }} --body "A new branch named \`$branch_name\` has been created and a [pull request]($pr_url) has been opened to merge this branch into \`main\`."
