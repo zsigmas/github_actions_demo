@@ -57,7 +57,7 @@ jobs:
           body="$branch_text $body_url"          
           
           echo "Creating comment"
-          gh issue comment ${{ github.event.issue.number }} --body $body 
+          gh issue comment ${{ github.event.issue.number }} --body "$body"
 
           
           
