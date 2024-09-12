@@ -8,8 +8,11 @@ jobs:
   comment-on-issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Authenticate GitHub CLI
-        run: gh auth login --with-token <<< "$GITHUB_TOKEN"
+      - name: Authenticate GitHub CLI with GITHUB_TOKEN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GITHUB_TOKEN" | gh auth login --with-token
 
       - name: Get issue labels using gh CLI
         id: get-labels
