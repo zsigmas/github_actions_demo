@@ -1,0 +1,40 @@
+name: 🐛 Bug Report
+description: Report a reproducible bug in the project
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear and concise description of the bug
+      placeholder: What went wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step guide to reproduce the bug
+      placeholder: |
+        1. Go to...
+        2. Run...
+        3. See error
+    validations:
+      required: true
+
+  - type: input
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Browser, Version, Node/Python/etc version
+      placeholder: e.g. macOS 13.5, Node 18.12.0
