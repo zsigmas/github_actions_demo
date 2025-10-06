@@ -1,5 +1,6 @@
 name: 🐛 Bug Report
 description: Report a reproducible bug in the project
+about: ⚠️ Reminder: All info you enter will be public. DO NOT INSERT SENSITIVE DATA
 title: "[Bug]: "
 labels: ["bug", "needs-triage"]
 body:
@@ -10,7 +11,7 @@ body:
       description: Clear and concise description of the bug
       placeholder: What went wrong?
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: steps
@@ -22,7 +23,7 @@ body:
         2. Run...
         3. See error
     validations:
-      required: true
+      required: false
 
   - type: input
     id: expected
@@ -30,11 +31,11 @@ body:
       label: Expected Behavior
       description: What did you expect to happen?
     validations:
-      required: true
+      required: false
 
   - type: input
     id: environment
     attributes:
       label: Environment
-      description: OS, Browser, Version, Node/Python/etc version
-      placeholder: e.g. macOS 13.5, Node 18.12.0
+      description: Browser and package version
+      placeholder: e.g. Edge 1.0, dv.manager 2.0, dv.explorer.parameter 1.0
