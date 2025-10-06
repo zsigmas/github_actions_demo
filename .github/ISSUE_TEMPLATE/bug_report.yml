@@ -1,6 +1,6 @@
 name: 🐛 Bug Report
 description: Report a reproducible bug in the project
-about: ⚠️ Reminder: All info you enter will be public. DO NOT INSERT SENSITIVE DATA
+about: "⚠️ Reminder: All info you enter will be public. DO NOT INSERT SENSITIVE DATA"
 title: "[Bug]: "
 labels: ["bug", "needs-triage"]
 body:
