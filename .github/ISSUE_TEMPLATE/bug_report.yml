@@ -1,8 +1,14 @@
 name: 🐛 Bug Report
-description:  "Report a reproducible bug in the project \n ⚠️ Reminder: All info you enter will be public. DO NOT INSERT SENSITIVE DATA"
+description:  "Report a reproducible bug in the project"
 title: "[Bug]: "
 labels: ["bug", "needs-triage"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **Reminder:** Everything you enter here will be publicly visible.
+        Do not include sensitive data like passwords, API keys, or personal info.
+        
   - type: textarea
     id: description
     attributes:
