@@ -1,0 +1,29 @@
+name: ✨ Feature Request
+description: Suggest a new feature or improvement
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem are you trying to solve?
+      placeholder: It’s frustrating when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like it to work?
+      placeholder: I’d like to see...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you thought about other solutions or workarounds?
+      placeholder: Other ways I tried...
